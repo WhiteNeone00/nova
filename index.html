@@ -1,0 +1,2497 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nova Serverside | #1 Free Roblox Serverside Moderation Tool</title>
+    <meta name="description" content="The #1 Roblox Serverside Global Execution Moderation System. Execute require scripts with ease.">
+    <meta name="application-name" content="Nova Serverside">
+    <meta property="og:title" content="Nova Serverside | #1 Free Roblox Serverside Moderation Tool">
+    <meta property="og:description" content="The #1 Free Roblox Serverside Global Execution Moderation System. Execute require scripts with ease.">
+    <meta property="og:site_name" content="Nova Serverside">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nova Serverside | #1 Free Roblox Serverside">
+    <meta name="twitter:description" content="The #1 Free Roblox Serverside Global Execution Moderation System. Execute require scripts with ease.">
+    <link rel="shortcut icon" href="/favicon.ico?v=2">
+    <link rel="icon" href="/favicon.ico?v=2">
+    <link rel="icon" href="/logo.png?v=2" type="image/png">
+    <link rel="apple-touch-icon" href="/logo.png?v=2">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #a855f7;
+            --blue: #3b82f6;
+            --dark: #020204;
+            --black: #000000;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--black);
+            color: white;
+            font-family: Outfit, "Outfit Fallback", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body.dark {
+            background: radial-gradient(circle at 34% 42%, #1b0e35 0%, #0d0a22 42%, #050916 74%, #02040d 100%);
+        }
+
+        /* Background Effects */
+        .background {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -50;
+            overflow: hidden;
+            background:
+                linear-gradient(100deg, #14092b 0%, #0a0f25 48%, #03172b 100%),
+                radial-gradient(circle at 18% 56%, rgba(124, 58, 237, 0.24), rgba(8, 10, 20, 0) 54%),
+                radial-gradient(circle at 84% 52%, rgba(37, 99, 235, 0.3), rgba(5, 10, 22, 0) 50%);
+            pointer-events: none;
+        }
+
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px);
+            background-size: 56px 56px;
+            background-position: 0 0, 0 0;
+            opacity: 0.28;
+            pointer-events: none;
+        }
+
+        .bg-grid-fine {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+            background-size: 28px 28px;
+            background-position: 0 0, 0 0;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .bg-gradient {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+        }
+
+        .bg-purple {
+            width: 90vw;
+            height: 90vw;
+            background: radial-gradient(circle at center, rgba(168, 85, 247, 0.42), rgba(99, 102, 241, 0.1));
+            top: -24%;
+            left: -24%;
+        }
+
+        .bg-blue {
+            width: 85vw;
+            height: 85vw;
+            background: radial-gradient(circle at center, rgba(56, 189, 248, 0.28), rgba(59, 130, 246, 0.08));
+            top: 24%;
+            left: 66%;
+        }
+
+        .bg-pink {
+            width: 78vw;
+            height: 78vw;
+            background: radial-gradient(circle at center, rgba(192, 132, 252, 0.2), rgba(168, 85, 247, 0.05));
+            top: 62%;
+            left: -28%;
+        }
+
+        .bg-violet {
+            width: 72vw;
+            height: 72vw;
+            background: radial-gradient(circle at center, rgba(96, 165, 250, 0.2), rgba(59, 130, 246, 0.05));
+            top: -34%;
+            left: 72%;
+        }
+
+        .bg-vignette {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 50% 55%, rgba(23, 14, 43, 0) 24%, rgba(5, 7, 14, 0.7) 100%),
+                linear-gradient(90deg, rgba(24, 8, 46, 0.46) 0%, rgba(10, 15, 35, 0.16) 45%, rgba(5, 18, 34, 0.54) 100%);
+            pointer-events: none;
+        }
+
+        .site-particles,
+        .hero-particles {
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .site-particles {
+            position: fixed;
+            inset: 0;
+            z-index: -20;
+        }
+
+        .particle-dot {
+            position: absolute;
+            border-radius: 999px;
+            background: radial-gradient(circle at 35% 35%, rgba(229, 231, 235, 0.6), rgba(156, 163, 175, 0.32));
+            filter: blur(0.9px);
+            box-shadow: 0 0 14px rgba(148, 163, 184, 0.22);
+            animation: float-gray linear infinite;
+            will-change: transform;
+            opacity: 0.26;
+        }
+
+        .hero-particles {
+            position: absolute;
+            inset: -30px;
+            z-index: 4;
+        }
+
+        .hero-particle-dot {
+            position: absolute;
+            border-radius: 999px;
+            background: radial-gradient(circle at 35% 35%, rgba(168, 85, 247, 0.92), rgba(96, 165, 250, 0.72));
+            filter: blur(1px);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.35);
+            animation: float-purple ease-in-out infinite;
+            will-change: transform;
+            opacity: 0.42;
+        }
+
+        .hero-visual-wrap {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 40px;
+            transform-style: preserve-3d;
+            transition: transform 120ms ease-out;
+            isolation: isolate;
+        }
+
+        .hero-character {
+            max-width: 420px;
+            width: 100%;
+            height: auto;
+            transform: translateY(0);
+            transition: transform 120ms ease-out;
+            will-change: transform;
+            position: relative;
+            z-index: 20;
+        }
+
+        .hero-stats {
+            z-index: 40;
+        }
+
+        @keyframes float-gray {
+            0% {
+                transform: translate3d(0, 0, 0);
+                opacity: 0.12;
+            }
+            50% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translate3d(0, -120px, 0);
+                opacity: 0.05;
+            }
+        }
+
+        @keyframes float-purple {
+            0% {
+                transform: translate3d(0, 0, 0) scale(1);
+                opacity: 0.45;
+            }
+            50% {
+                transform: translate3d(0, -22px, 0) scale(1.08);
+                opacity: 1;
+            }
+            100% {
+                transform: translate3d(0, 0, 0) scale(1);
+                opacity: 0.45;
+            }
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: rgba(10, 10, 12, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            max-width: 1220px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: none;
+            gap: 3rem;
+            flex: 2;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .nav-links {
+                display: flex;
+            }
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #a0aec0;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 1.5px;
+            background: var(--purple);
+            transform: translateX(-50%);
+            transition: width 0.3s;
+            opacity: 0.4;
+            box-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            flex: 1;
+            align-items: center;
+        }
+
+        .sign-in-btn {
+            padding: 10px 32px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: white;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .sign-in-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Main Container */
+        main {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            text-white;
+            position: relative;
+            font-family: Outfit, "Outfit Fallback", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding-top: 150px;
+            padding-bottom: 80px;
+        }
+
+        .hero-content {
+            max-width: 1080px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 22px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 44px;
+            z-index: 10;
+            opacity: 1;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-content {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .hero-text {
+            flex: 1;
+            max-width: 36rem;
+            text-align: center;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-text {
+                text-align: left;
+            }
+        }
+
+        .hero-top-stack {
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-top-stack {
+                align-items: flex-start;
+            }
+        }
+
+        .alert-badge {
+            position: relative;
+            border: 1px solid rgba(250, 204, 21, 0.2);
+            background: rgba(250, 204, 21, 0.06);
+            padding: 8px 16px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+        }
+
+        .alert-badge-glow {
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            background: rgba(250, 204, 21, 0.05);
+            filter: blur(20px);
+            opacity: 0.6;
+        }
+
+        .alert-icon {
+            position: relative;
+            width: 16px;
+            height: 16px;
+            color: rgba(253, 224, 71, 0.8);
+            flex-shrink: 0;
+        }
+
+        .alert-text {
+            position: relative;
+            font-size: 12px;
+            color: rgba(254, 243, 199, 0.8);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .rating-badge {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(24px);
+            padding: 10px 24px;
+            border-radius: 999px;
+            gap: 16px;
+            min-width: 280px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.45);
+            transition: all 0.35s ease;
+            overflow: hidden;
+        }
+
+        .rating-badge:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+
+        .rating-glow {
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            background: rgba(168, 85, 247, 0.05);
+            filter: blur(24px);
+            transition: background 0.7s ease;
+        }
+
+        .rating-badge:hover .rating-glow {
+            background: rgba(168, 85, 247, 0.15);
+        }
+
+        .stars {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding-right: 14px;
+            height: 20px;
+        }
+
+        .star-wrap {
+            position: relative;
+            width: 16px;
+            height: 16px;
+            transition: transform 0.25s ease;
+        }
+
+        .rating-badge:hover .star-wrap {
+            transform: scale(1.1);
+        }
+
+        .star {
+            position: absolute;
+            inset: 0;
+            width: 16px;
+            height: 16px;
+            stroke: none;
+        }
+
+        .star-base {
+            fill: rgba(255, 255, 255, 0.1);
+        }
+
+        .star-half {
+            width: 50%;
+            overflow: hidden;
+            position: absolute;
+            inset: 0;
+        }
+
+        .rating-text {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+
+        .rating-light {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .rating-strong {
+            color: #ffffff;
+            font-weight: 800;
+        }
+
+        .rating-count {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 4.5rem;
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .underline {
+            position: relative;
+            display: inline-block;
+        }
+
+        .underline svg {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: auto;
+        }
+
+        .hero-title {
+            color: #ffffff;
+        }
+
+        .hero-title .gradient-word {
+            background: linear-gradient(to right, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-underline path {
+            filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.6));
+        }
+
+        .hero-description {
+            font-family: Outfit, "Outfit Fallback", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 29px;
+            color: oklch(0.707 0.022 261.325);
+            margin-bottom: 48px;
+            max-width: 512px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            width: 100%;
+            max-width: none;
+        }
+
+        @media (min-width: 640px) {
+            .cta-buttons {
+                flex-direction: row;
+                width: auto;
+                align-items: center;
+                gap: 24px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .cta-buttons {
+                justify-content: flex-start;
+            }
+        }
+
+        .btn {
+            height: 56px;
+            padding: 0 32px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: rgba(255, 255, 255, 0.02);
+            color: white;
+            backdrop-filter: blur(24px);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.45);
+            border: 1.5px solid transparent;
+        }
+
+        .btn-primary::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1.5px;
+            background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.7;
+            transition: opacity 0.35s ease;
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.25s ease;
+        }
+
+        .btn-primary:hover svg {
+            transform: translateX(6px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(12px);
+            opacity: 0.9;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            opacity: 1;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 28rem;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 0 50px rgba(168, 85, 247, 0.25));
+        }
+
+        .hero-stats-wrap {
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            width: 120%;
+            transform: translateX(-50%) scale(0.85);
+            z-index: 40;
+            display: flex;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .hero-stats-wrap {
+                transform: translateX(-50%) scale(0.95);
+            }
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            margin-top: 0;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 10, 12, 0.4);
+            backdrop-filter: blur(24px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            padding: 16px 32px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-stats-inner {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-stats-glow {
+            position: absolute;
+            inset: 0;
+            background: rgba(168, 85, 247, 0.05);
+            filter: blur(80px);
+            border-radius: 999px;
+            z-index: -1;
+        }
+
+        .hero-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 32px;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-stat {
+                align-items: flex-start;
+                text-align: left;
+            }
+        }
+
+        .hero-stat:last-child {
+            border-right: 0;
+        }
+
+        .hero-stat-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .hero-stat-icon {
+            padding: 6px;
+            border-radius: 10px;
+            transition: all 0.5s;
+        }
+
+        .hero-stat:hover .hero-stat-icon {
+            transform: scale(1.1);
+        }
+
+        .hero-stat-icon.purple {
+            background: rgba(168, 85, 247, 0.1);
+            color: #c084fc;
+        }
+
+        .hero-stat-icon.blue {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+        }
+
+        .hero-stat-icon.indigo {
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+        }
+
+        .hero-stat-label {
+            color: #6b7280;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+        }
+
+        .hero-stat-value {
+            color: #fff;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .hero-stat-line {
+            width: 32px;
+            height: 2px;
+            margin-top: 8px;
+            border-radius: 999px;
+            opacity: 0;
+            transition: all 0.5s;
+        }
+
+        .hero-stat:hover .hero-stat-line {
+            opacity: 1;
+        }
+
+        .hero-stat-line.purple {
+            background: rgba(168, 85, 247, 0.3);
+        }
+
+        .hero-stat-line.blue {
+            background: rgba(59, 130, 246, 0.3);
+        }
+
+        .hero-stat-line.indigo {
+            background: rgba(99, 102, 241, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats-wrap {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                width: 100%;
+                transform: none;
+                margin-top: 18px;
+            }
+
+            .hero-stats {
+                width: 100%;
+                max-width: 420px;
+                padding: 14px 16px;
+            }
+
+            .hero-stats-inner {
+                flex-direction: row;
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .hero-stat {
+                border-right: 1px solid rgba(255, 255, 255, 0.05);
+                border-bottom: 0;
+                padding: 0 10px;
+                align-items: center;
+                flex: 1;
+            }
+
+            .hero-stat:last-child {
+                border-right: 0;
+            }
+
+            .hero-stat-head {
+                gap: 8px;
+            }
+
+            .hero-stat-value {
+                font-size: 24px;
+            }
+        }
+
+        /* Sections */
+        section {
+            padding: 72px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+        }
+
+        .section-label {
+            font-size: 14px;
+            font-weight: 700;
+            background: linear-gradient(to right, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 16px;
+        }
+
+        .section-accent {
+            width: 64px;
+            height: 3px;
+            background: linear-gradient(to right, #a855f7, #3b82f6);
+            border-radius: 999px;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        @media (min-width: 768px) {
+            h2 {
+                font-size: 3.5rem;
+            }
+        }
+
+        .section-description {
+            font-family: Outfit, "Outfit Fallback", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 29px;
+            color: oklch(0.707 0.022 261.325);
+            max-width: 640px;
+            opacity: 0.9;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 56px;
+            align-items: stretch;
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 1024px) {
+            .features {
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+                gap: 80px;
+            }
+
+            #features .container {
+                max-width: 1250px;
+            }
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 24px;
+            padding: 22px 24px;
+            border-radius: 1.75rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.7s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-item:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .feature-item::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: 0.05;
+            pointer-events: none;
+            transition: opacity 0.7s;
+            background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
+
+        .feature-item:hover::before {
+            opacity: 0.08;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.7);
+            flex-shrink: 0;
+            transition: all 0.7s;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-item:hover .feature-icon {
+            color: #a855f7;
+            border-color: rgba(168, 85, 247, 0.4);
+            background: rgba(168, 85, 247, 0.1);
+        }
+
+        .feature-content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .feature-content h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-content p {
+            color: #a0aec0;
+            font-size: 14px;
+            line-height: 1.5;
+            font-weight: 500;
+            max-width: 390px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features-left {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .video-shell {
+            aspect-ratio: 16/9;
+            border-radius: 2.5rem;
+            padding: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 10, 12, 0.8);
+            backdrop-filter: blur(24px);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+            transition: all 1s;
+        }
+
+        .video-shell:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .video-shell iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 1.8rem;
+            opacity: 0.9;
+            transition: opacity 1s;
+            background: #000;
+        }
+
+        .video-shell:hover iframe {
+            opacity: 1;
+        }
+
+        .tos-card {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            padding: 34px;
+            border-radius: 2.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(24px);
+            position: relative;
+            overflow: hidden;
+            transition: all 1s;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
+        }
+
+        .tos-card:hover {
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .tos-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1.5px;
+            background: linear-gradient(to right, transparent, rgba(59, 130, 246, 0.6), transparent);
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .tos-card:hover::before {
+            opacity: 1;
+        }
+
+        .tos-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: 0.06;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+            background-size: 24px 24px;
+            transition: opacity 1s;
+        }
+
+        .tos-card:hover::after {
+            opacity: 0.1;
+        }
+
+        .tos-head {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tos-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .tos-tag {
+            font-size: 10px;
+            font-weight: 900;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .tos-title {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            color: #fff;
+        }
+
+        .tos-copy {
+            font-size: 17px;
+            line-height: 1.65;
+            font-weight: 500;
+            color: #9ca3af;
+            max-width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features-right {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .features-head {
+            margin-bottom: 36px;
+            padding-left: 8px;
+        }
+
+        .features-headline {
+            font-size: clamp(48px, 4.7vw, 60px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 14px;
+            white-space: nowrap;
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        @media (max-width: 1023px) {
+            #features .container {
+                max-width: 1080px;
+            }
+
+            .features-head {
+                margin-bottom: 34px;
+                padding-left: 0;
+            }
+
+            .features-headline {
+                white-space: normal;
+                line-height: 1.05;
+            }
+
+            .tos-card {
+                padding: 30px;
+            }
+
+            .tos-title {
+                font-size: 36px;
+            }
+
+            .feature-content h4 {
+                font-size: 20px;
+            }
+
+            .feature-content p {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .tos-head {
+                gap: 14px;
+            }
+
+            .tos-icon {
+                width: 48px;
+                height: 48px;
+            }
+
+            .tos-title {
+                font-size: 30px;
+            }
+
+            .feature-content h4 {
+                font-size: 24px;
+            }
+
+            .feature-content p {
+                font-size: 14px;
+            }
+
+            .features-headline {
+                font-size: clamp(44px, 15vw, 64px);
+            }
+        }
+
+        /* Pricing Section */
+        .pricing-head {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 56px;
+            align-items: end;
+            max-width: 1050px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-title {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .pricing-title {
+                font-size: 3.75rem;
+            }
+        }
+
+        .pricing-subtitle {
+            font-family: Outfit, "Outfit Fallback", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 29px;
+            color: oklch(0.707 0.022 261.325);
+            max-width: 640px;
+            opacity: 0.9;
+        }
+
+        @media (min-width: 1024px) {
+            .pricing-head {
+                grid-template-columns: 1fr auto;
+            }
+        }
+
+        .currency-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 4px;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .currency-btn {
+            border: 0;
+            background: transparent;
+            color: #6b7280;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 10px 22px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .currency-btn.active {
+            background: #ffffff;
+            color: #020204;
+        }
+
+        .pricing-table {
+            background: rgba(7, 7, 9, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2.5rem;
+            overflow: hidden;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.36);
+            backdrop-filter: blur(24px);
+            position: relative;
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        .pricing-vline {
+            position: absolute;
+            inset-y: 0;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            display: none;
+        }
+
+        .pricing-vline.emphasis {
+            background: rgba(168, 85, 247, 0.12);
+        }
+
+        @media (min-width: 1024px) {
+            .pricing-vline {
+                display: block;
+            }
+        }
+
+        .pricing-header {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pricing-cell {
+            padding: 32px;
+            text-align: center;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .pricing-cell:last-child {
+            border-right: none;
+        }
+
+        .pricing-cell.label {
+            text-align: left;
+            padding-left: 40px;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .features-key {
+            display: flex;
+            align-items: center;
+            color: #9ca3af;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-transform: none;
+        }
+
+        .features-key-dot {
+            display: none;
+        }
+
+        .pricing-tier h3 {
+            color: #a0aec0;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .pricing-old {
+            position: absolute;
+            left: -10px;
+            top: 2px;
+            transform: translateX(-100%);
+            color: #6b7280;
+            text-decoration: line-through;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .pricing-amount {
+            font-size: 24px;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .pricing-period {
+            font-size: 10px;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .pricing-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pricing-row:nth-child(even) {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .pricing-row-label {
+            padding: 16px;
+            padding-left: 40px;
+            text-align: left;
+            color: #6b7280;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .pricing-row-value {
+            padding: 16px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: #a0aec0;
+        }
+
+        .enhanced-col {
+            background: rgba(168, 85, 247, 0.04);
+            color: #ffffff;
+        }
+
+        .enhanced-tag {
+            position: absolute;
+            top: 14px;
+            right: 12px;
+            width: 30px;
+            height: 30px;
+            border-radius: 999px;
+            border: 1px solid rgba(168, 85, 247, 0.55);
+            color: #d8b4fe;
+            background: rgba(10, 10, 12, 0.85);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
+        }
+
+        .enhanced-tag svg {
+            width: 12px;
+            height: 12px;
+            color: #c084fc;
+            fill: rgba(192, 132, 252, 0.2);
+        }
+
+        .enhanced-topbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, rgba(168, 85, 247, 0.95), transparent);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+        }
+
+        .pricing-mark {
+            width: 18px;
+            height: 18px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .pricing-mark.check path {
+            stroke: url(#pricing-check-grad);
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .pricing-mark.cross path {
+            stroke: rgba(255, 255, 255, 0.14);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .pricing-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            align-items: stretch;
+            padding: 8px 0;
+        }
+
+        .pricing-action-cell {
+            padding: 24px;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pricing-action-cell:last-child {
+            border-right: 0;
+        }
+
+        .pricing-action-btn {
+            width: 100%;
+            height: 44px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: transparent;
+            color: #9ca3af;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .pricing-action-btn:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: #ffffff;
+        }
+
+        .pricing-action-btn.blue {
+            border-color: rgba(59, 130, 246, 0.35);
+            color: rgba(96, 165, 250, 0.85);
+        }
+
+        .pricing-action-btn.blue:hover {
+            background: rgba(59, 130, 246, 0.07);
+        }
+
+        .pricing-action-btn.purple {
+            border-color: rgba(168, 85, 247, 0.5);
+            color: rgba(196, 181, 253, 0.95);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.12);
+        }
+
+        .pricing-action-btn.purple:hover {
+            background: rgba(168, 85, 247, 0.12);
+        }
+
+        .check-icon {
+            width: 18px;
+            height: 18px;
+            margin: 0 auto;
+        }
+
+        /* FAQ Section */
+        .faq-head {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            gap: 24px;
+            padding: 0 8px;
+        }
+
+        @media (min-width: 768px) {
+            .faq-head {
+                flex-direction: row;
+                align-items: flex-end;
+            }
+        }
+
+        .faq-head-left {
+            text-align: left;
+        }
+
+        .faq-head-label-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .faq-head-label {
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .faq-head-line {
+            width: 48px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-head-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            margin: 0;
+        }
+
+        .faq-head-copy {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+            line-height: 1.6;
+            max-width: 280px;
+            opacity: 0.8;
+        }
+
+        @media (min-width: 768px) {
+            .faq-head-copy {
+                text-align: right;
+            }
+        }
+
+        .faq-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            align-items: start;
+        }
+
+        @media (min-width: 768px) {
+            .faq-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .faq-item {
+            background: rgba(7, 7, 9, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+            height: fit-content;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .faq-button {
+            width: 100%;
+            text-align: left;
+            padding: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            justify-content: space-between;
+        }
+
+        @media (min-width: 768px) {
+            .faq-button {
+                padding: 20px;
+            }
+        }
+
+        .faq-button-inner {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .faq-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.02);
+            color: #374151;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.5s;
+        }
+
+        .faq-question {
+            font-size: 15px;
+            font-weight: 700;
+            color: #9ca3af;
+            letter-spacing: -0.01em;
+            transition: color 0.3s;
+        }
+
+        .faq-item:hover .faq-question {
+            color: #e5e7eb;
+        }
+
+        /* Footer */
+        footer {
+            width: 100%;
+            padding: 48px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(10px);
+            color: #a0aec0;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            width: 32px;
+            height: 32px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-links a {
+            color: #a0aec0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #60a5fa;
+        }
+
+        /* Utilities */
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 10, 12, 0.8);
+            margin-bottom: 32px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body class="dark">
+    <div class="background">
+        <div style="position: absolute; inset: 0; opacity: 0.55; transition: background-color 1s;"></div>
+        <div class="bg-grid"></div>
+        <div class="bg-grid-fine"></div>
+        <div class="bg-gradient bg-purple"></div>
+        <div class="bg-gradient bg-blue"></div>
+        <div class="bg-gradient bg-pink"></div>
+        <div class="bg-gradient bg-violet"></div>
+        <div class="bg-vignette"></div>
+    </div>
+    <div class="site-particles" id="siteParticles" aria-hidden="true"></div>
+
+    <div style="pointer-events: auto;">
+        <header>
+            <nav>
+                <div class="logo">
+                    <img src="/logo.png" alt="Nova Logo" width="40" height="40">
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link">Home</a>
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#reviews" class="nav-link">Reviews</a>
+                    <a href="#policy" class="nav-link">Policy</a>
+                    <a href="#plans" class="nav-link">Plans</a>
+                    <a href="#faq" class="nav-link">FAQ</a>
+                    <a href="https://discord.gg/sided" target="_blank" class="nav-link">Discord</a>
+                </div>
+                <div class="nav-right">
+                    <a href="/auth" class="sign-in-btn">Sign In</a>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="hero-top-stack">
+                            <div class="alert-badge">
+                                <div class="alert-badge-glow"></div>
+                                <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m0 4h.01M10.29 3.86l-7.5 13A1 1 0 003.66 18h16.68a1 1 0 00.87-1.5l-7.5-13a1 1 0 00-1.74 0z"></path>
+                                </svg>
+                                <p class="alert-text">Third-party review platforms were hit by a spam 1★ “review raid” on Mar 25. We’re actively addressing it, and reviews from that date may be inaccurate.</p>
+                            </div>
+
+                            <a href="/reviews" style="display:block; outline:none; text-decoration:none;">
+                                <div class="rating-badge">
+                                    <div class="rating-glow"></div>
+                                    <div class="stars">
+                                        <div class="star-wrap">
+                                            <svg class="star star-base" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                            <svg class="star" viewBox="0 0 24 24" style="fill: rgb(59, 130, 246);"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                        </div>
+                                        <div class="star-wrap">
+                                            <svg class="star star-base" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                            <svg class="star" viewBox="0 0 24 24" style="fill: rgb(99, 102, 241);"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                        </div>
+                                        <div class="star-wrap">
+                                            <svg class="star star-base" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                            <svg class="star" viewBox="0 0 24 24" style="fill: rgb(139, 92, 246);"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                        </div>
+                                        <div class="star-wrap">
+                                            <svg class="star star-base" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                            <svg class="star" viewBox="0 0 24 24" style="fill: rgb(168, 85, 247);"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                        </div>
+                                        <div class="star-wrap">
+                                            <svg class="star star-base" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                            <span class="star-half">
+                                                <svg class="star" viewBox="0 0 24 24" style="fill: rgb(192, 132, 252);"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <span class="rating-text">
+                                        <span class="rating-light">4.5 / 5 from</span>
+                                        <span class="rating-strong">Verified Customers</span>
+                                        <span class="rating-count">(187)</span>
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <h1 class="hero-title">The <span class="underline"><span class="gradient-word">Best</span><svg class="title-underline" width="120" height="12" viewBox="0 0 120 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 10C35 10 65 2 118 10C122 10.5 125 8 120 5" stroke="url(#underline-gradient)" stroke-width="3.5" stroke-linecap="round"></path><defs><linearGradient id="underline-gradient" x1="0" y1="0" x2="120" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#a855f7"></stop><stop offset="1" stop-color="#3b82f6"></stop></linearGradient></defs></svg></span> Roblox <br><span class="gradient-word">Serverside</span> on The Market.</h1>
+
+                        <p class="hero-description">
+                            Reliable serverside execution, built with stability and control.<br>
+                            A web-based serversided moderation platform with tools.<br>
+                            All within a clean, intuitive, and modern dashboard.
+                        </p>
+
+                        <div class="cta-buttons">
+                            <button class="btn btn-primary">
+                                <span style="position:relative; z-index:1;">Get Started</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:relative; z-index:1;">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </button>
+                            <a href="https://discord.gg/sided" target="_blank" class="btn btn-secondary">
+                                <svg viewBox="0 0 127.14 96.36" style="width: 20px; height: 20px; fill: currentColor;">
+                                    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.06,72.06,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.71,32.65-1.82,56.6.48,80.21a105.73,105.73,0,0,0,32.28,16.15,77.7,77.7,0,0,0,7.37-12,67.65,67.65,0,0,1-11.72-5.63,55.88,55.88,0,0,0,1.05-.79,74.93,74.93,0,0,0,65.33,0,54,54,0,0,0,1,0.79,67.56,67.56,0,0,1-11.71,5.62,77.7,77.7,0,0,0,7.37,12,105.17,105.17,0,0,0,32.31-16.14C129.58,52.28,124.4,28.68,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5.07-12.7,11.43-12.7S54,46,53.87,53,48.74,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5.07-12.7,11.41-12.7S96.1,46,96,53,90.89,65.69,84.69,65.69Z"></path>
+                                </svg>
+                                Join Discord
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="hero-image">
+                        <div class="hero-visual-wrap" id="heroVisualWrap">
+                            <div class="hero-particles" id="heroParticles" aria-hidden="true"></div>
+                            <img src="/hero-character.png" alt="Nova Hero" class="hero-character" id="heroCharacter">
+                            <div class="hero-stats-wrap">
+                                <div class="hero-stats">
+                                    <div class="hero-stats-inner">
+                                        <div class="hero-stats-glow"></div>
+
+                                        <div class="hero-stat">
+                                            <div class="hero-stat-head">
+                                                <div class="hero-stat-icon purple">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="m16 18 6-6-6-6"></path>
+                                                        <path d="m8 6-6 6 6 6"></path>
+                                                    </svg>
+                                                </div>
+                                                <span class="hero-stat-label">Executions</span>
+                                            </div>
+                                            <div class="hero-stat-value">528,044</div>
+                                            <div class="hero-stat-line purple"></div>
+                                        </div>
+
+                                        <div class="hero-stat">
+                                            <div class="hero-stat-head">
+                                                <div class="hero-stat-icon blue">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
+                                                    </svg>
+                                                </div>
+                                                <span class="hero-stat-label">Uptime</span>
+                                            </div>
+                                            <div class="hero-stat-value">99.9%</div>
+                                            <div class="hero-stat-line blue"></div>
+                                        </div>
+
+                                        <div class="hero-stat">
+                                            <div class="hero-stat-head">
+                                                <div class="hero-stat-icon indigo">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                                        <circle cx="12" cy="7" r="4"></circle>
+                                                    </svg>
+                                                </div>
+                                                <span class="hero-stat-label">Total Users</span>
+                                            </div>
+                                            <div class="hero-stat-value">23,300</div>
+                                            <div class="hero-stat-line indigo"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section id="features">
+                <div class="container">
+                    <div class="features">
+                        <div class="features-left">
+                            <div class="video-shell">
+                                <iframe src="https://www.youtube.com/embed/NTt2thqB0uE?autoplay=0&controls=1&rel=0&modestbranding=1" title="Nova Showcase" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+                            </div>
+                            <div class="tos-card">
+                                <div class="tos-head">
+                                    <div class="tos-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M12 15V3"></path>
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <path d="m7 10 5 5 5-5"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <span class="tos-tag">Roblox Compliant</span>
+                                        <h3 class="tos-title">Follows Roblox TOS</h3>
+                                    </div>
+                                </div>
+                                <p class="tos-copy">Nova is engineered to be fully compliant with Roblox's Terms of Service. Unlike traditional tools, our platform does not utilize exploits or external injections. We provide a safe, high-performance web-dashboard experience that connects you to your game sessions through official, supported channels, ensuring a secure and legitimate moderation environment, no bans or false terminations to worry about.</p>
+                            </div>
+                        </div>
+
+                        <div class="features-right">
+                            <div class="features-head">
+                                <div class="section-label">Our Features</div>
+                                <div class="section-accent"></div>
+                                <h2 class="features-headline"><span class="gradient-text">Premium</span> Experience.</h2>
+                                <p class="section-description">Featuring a beautiful interface that has everything you need exactly in our web dashboard.</p>
+                            </div>
+
+                            <div class="features-list">
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="feature-content">
+                                        <h4>Private Script Cloud</h4>
+                                        <p>Access hundreds of premade scripts ready to use, available across our Free and Enhanced plans. Even though our software runs internally in-game, you can securely load, save, and manage your own private scripts in our cloud without ever losing them.</p>
+                                    </div>
+                                </div>
+
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="m18 16 4-4-4-4"></path>
+                                            <path d="m6 8-4 4 4 4"></path>
+                                            <path d="m14.5 4-5 16"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="feature-content">
+                                        <h4>Instant Execution</h4>
+                                        <p>Even though we're fully web-based, we connect to games instantly and execute Roblox scripts in under half a second. Experience fast, seamless performance without downloads or delays.</p>
+                                    </div>
+                                </div>
+
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="feature-content">
+                                        <h4>High Player Counts</h4>
+                                        <p>Nova is built to handle extremely high player counts, scaling seamlessly from just a few players to thousands without sacrificing performance or stability.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pricing Section -->
+            <section id="plans">
+                <div class="container">
+                    <div class="pricing-head">
+                        <div class="section-header" style="margin-bottom: 0;">
+                            <div class="section-label">Pricing</div>
+                            <div class="section-accent"></div>
+                            <h2 class="pricing-title">Our <span class="gradient-text">Access</span> Plans.</h2>
+                            <p class="pricing-subtitle">Choose the perfect tier to enhance your moderation through our premium web dashboard, assuring an excellent UX.</p>
+                        </div>
+                        <div class="currency-toggle" aria-label="Currency">
+                            <button class="currency-btn active" type="button">USD</button>
+                            <button class="currency-btn" type="button">Robux</button>
+                        </div>
+                    </div>
+
+                    <div class="pricing-table">
+                        <div class="pricing-vline" style="left: 25%;"></div>
+                        <div class="pricing-vline" style="left: 50%;"></div>
+                        <div class="pricing-vline emphasis" style="left: 75%;"></div>
+
+                        <div class="pricing-header">
+                            <div class="pricing-cell label">
+                                <div class="features-key">
+                                    <span class="features-key-dot"></span>
+                                    <span>Features</span>
+                                </div>
+                            </div>
+                            <div class="pricing-cell">
+                                <div class="pricing-tier">
+                                    <h3>Limited</h3>
+                                    <div style="position: relative; display: inline-block;">
+                                        <span class="pricing-old">$5</span>
+                                        <div class="pricing-amount">$0</div>
+                                    </div>
+                                    <span class="pricing-period">Lifetime</span>
+                                </div>
+                            </div>
+                            <div class="pricing-cell">
+                                <div class="pricing-tier">
+                                    <h3>Basic</h3>
+                                    <div class="pricing-amount">$10</div>
+                                    <span class="pricing-period">Lifetime</span>
+                                </div>
+                            </div>
+                            <div class="pricing-cell enhanced-col">
+                                <div class="enhanced-topbar"></div>
+                                <span class="enhanced-tag" aria-label="premium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path>
+                                        <path d="M5 21h14"></path>
+                                    </svg>
+                                </span>
+                                <div class="pricing-tier">
+                                    <h3>Enhanced</h3>
+                                    <div class="pricing-amount" style="background: linear-gradient(to right, #c084fc, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">$20</div>
+                                    <span class="pricing-period" style="color: rgba(168,85,247,0.5);">Lifetime Premium</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pricing-row">
+                            <div class="pricing-row-label">Games Included</div>
+                            <div class="pricing-row-value">100+ Test Games</div>
+                            <div class="pricing-row-value">Below 100 Players</div>
+                            <div class="pricing-row-value enhanced-col">All Supported Games</div>
+                        </div>
+
+                        <div class="pricing-row">
+                            <div class="pricing-row-label">Player Counts</div>
+                            <div class="pricing-row-value">Up to 25</div>
+                            <div class="pricing-row-value">1-100</div>
+                            <div class="pricing-row-value enhanced-col">Unlimited</div>
+                        </div>
+
+                        <div class="pricing-row">
+                            <div class="pricing-row-label">Script Execution</div>
+                            <div class="pricing-row-value">Fast</div>
+                            <div class="pricing-row-value">Instant</div>
+                            <div class="pricing-row-value enhanced-col">Instant</div>
+                        </div>
+
+                        <div class="pricing-row">
+                            <div class="pricing-row-label">Script Hub</div>
+                            <div class="pricing-row-value">
+                                <svg class="pricing-mark check" viewBox="0 0 24 24"><path d="M20 6L9 17L4 12"></path></svg>
+                            </div>
+                            <div class="pricing-row-value">
+                                <svg class="pricing-mark check" viewBox="0 0 24 24"><path d="M20 6L9 17L4 12"></path></svg>
+                            </div>
+                            <div class="pricing-row-value enhanced-col">
+                                <svg class="pricing-mark check" viewBox="0 0 24 24"><path d="M20 6L9 17L4 12"></path></svg>
+                            </div>
+                        </div>
+
+                        <div class="pricing-row">
+                            <div class="pricing-row-label">Private Cloud Scripts</div>
+                            <div class="pricing-row-value">
+                                <svg class="pricing-mark cross" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                            </div>
+                            <div class="pricing-row-value">
+                                <svg class="pricing-mark check" viewBox="0 0 24 24"><path d="M20 6L9 17L4 12"></path></svg>
+                            </div>
+                            <div class="pricing-row-value enhanced-col">
+                                <svg class="pricing-mark check" viewBox="0 0 24 24"><path d="M20 6L9 17L4 12"></path></svg>
+                            </div>
+                        </div>
+
+                        <div class="pricing-row">
+                            <div class="pricing-row-label">Support</div>
+                            <div class="pricing-row-value">Low Priority</div>
+                            <div class="pricing-row-value">Mid Priority</div>
+                            <div class="pricing-row-value enhanced-col">24/7 Priority</div>
+                        </div>
+
+                        <div class="pricing-row">
+                            <div class="pricing-row-label">Unlimited Appeals</div>
+                            <div class="pricing-row-value">
+                                <svg class="pricing-mark cross" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                            </div>
+                            <div class="pricing-row-value">
+                                <svg class="pricing-mark check" viewBox="0 0 24 24"><path d="M20 6L9 17L4 12"></path></svg>
+                            </div>
+                            <div class="pricing-row-value enhanced-col">
+                                <svg class="pricing-mark check" viewBox="0 0 24 24"><path d="M20 6L9 17L4 12"></path></svg>
+                            </div>
+                        </div>
+
+                        <div class="pricing-actions">
+                            <svg width="0" height="0" style="position:absolute">
+                                <defs>
+                                    <linearGradient id="pricing-check-grad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#60a5fa"></stop>
+                                        <stop offset="1" stop-color="#a855f7"></stop>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="pricing-action-cell" style="background: rgba(255,255,255,0.01);"></div>
+                            <div class="pricing-action-cell">
+                                <button class="pricing-action-btn">Claim Free</button>
+                            </div>
+                            <div class="pricing-action-cell">
+                                <button class="pricing-action-btn blue">Purchase</button>
+                            </div>
+                            <div class="pricing-action-cell enhanced-col">
+                                <button class="pricing-action-btn purple">Purchase</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section id="faq">
+                <div class="container">
+                    <div class="faq-head">
+                        <div class="faq-head-left">
+                            <div class="faq-head-label-row">
+                                <span class="faq-head-label">Information</span>
+                                <div class="faq-head-line"></div>
+                            </div>
+                            <h2 class="faq-head-title">Frequently <span class="gradient-text">Asked.</span></h2>
+                        </div>
+                        <p class="faq-head-copy">Direct and verified answers.</p>
+                    </div>
+
+                    <div class="faq-container">
+                        <div class="faq-item">
+                            <button class="faq-button">
+                                <div class="faq-button-inner">
+                                    <div class="faq-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14"></path>
+                                            <path d="M12 5v14"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="faq-question">Is Nova Against Roblox Policy?</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-button">
+                                <div class="faq-button-inner">
+                                    <div class="faq-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14"></path>
+                                            <path d="M12 5v14"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="faq-question">What Is Nova Used For?</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-button">
+                                <div class="faq-button-inner">
+                                    <div class="faq-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14"></path>
+                                            <path d="M12 5v14"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="faq-question">How Does Nova Work?</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-button">
+                                <div class="faq-button-inner">
+                                    <div class="faq-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14"></path>
+                                            <path d="M12 5v14"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="faq-question">Do I need to download anything?</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-button">
+                                <div class="faq-button-inner">
+                                    <div class="faq-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14"></path>
+                                            <path d="M12 5v14"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="faq-question">When do I get my key?</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-button">
+                                <div class="faq-button-inner">
+                                    <div class="faq-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14"></path>
+                                            <path d="M12 5v14"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="faq-question">What devices are supported?</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-button">
+                                <div class="faq-button-inner">
+                                    <div class="faq-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14"></path>
+                                            <path d="M12 5v14"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="faq-question">Can I pay in Robux?</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-button">
+                                <div class="faq-button-inner">
+                                    <div class="faq-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14"></path>
+                                            <path d="M12 5v14"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="faq-question">Is support available 24/7?</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section style="margin-top: 84px; margin-bottom: 40px;">
+                <div style="max-width: 1100px; margin: 0 auto; padding: 0 16px; position: relative; border-radius: 34px; border: 1px solid rgba(255,255,255,0.1); background: rgba(7, 3, 17, 0.9); backdrop-filter: blur(12px); overflow: hidden;">
+                    <div style="position: absolute; inset: 0; z-index: 0;">
+                        <img src="https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/optimized/4X/2/9/e/29e563a615dfacbce57f16f57fbdfdc53d92c563_2_690x388.png" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.32; filter: blur(4px);">
+                        <div style="position: absolute; inset: 0; background: rgba(5, 1, 10, 0.45);"></div>
+                    </div>
+
+                    <div style="position: relative; z-index: 10; padding: 56px 40px; text-align: center;">
+                        <h2 style="font-size: 60px; font-weight: 700; margin-bottom: 19px; letter-spacing: -0.04em; line-height: 1.05;">Start using <span class="gradient-text">Nova</span> today.</h2>
+                        <p style="font-size: 20px; color: rgba(255,255,255,0.46); margin-bottom: 34px; line-height: 1.75;">Reliable execution, modern tooling, and a clean dashboard built for everything from private testing to larger live games ranging from 0-1K+ concurrent users.</p>
+                        <div style="display: flex; flex-direction: row; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap;">
+                            <a href="#plans" style="height: 62px; padding: 0 34px; border-radius: 18px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; color:#fff; font-weight:700; background:linear-gradient(to right,#a855f7,#3b82f6); box-shadow:0 0 34px rgba(139,92,246,0.35);">Discover Plans</a>
+                            <span style="display:inline-flex; color: rgba(255,255,255,0.25); font-size:12px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase;" class="cta-or">OR</span>
+                            <a href="/dashboard" style="height: 62px; padding: 0 34px; border-radius: 18px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; color:rgba(255,255,255,0.92); font-weight:700; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); backdrop-filter: blur(12px);">Try for Free</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-left">
+                    <img src="/logo.png" alt="Nova Logo" class="footer-logo">
+                    <p>© 2026 Nova Serverside. All rights reserved.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="/terms">Terms of Service</a>
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="mailto:support@serverside.gg">Contact Us</a>
+                    <a href="https://discord.gg/sided" target="_blank">Discord</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        (function initParticlesAndHeroMotion() {
+            const siteParticles = document.getElementById('siteParticles');
+            const heroParticles = document.getElementById('heroParticles');
+            const heroWrap = document.getElementById('heroVisualWrap');
+            const heroCharacter = document.getElementById('heroCharacter');
+
+            if (siteParticles) {
+                const totalGray = 120;
+                for (let i = 0; i < totalGray; i += 1) {
+                    const dot = document.createElement('span');
+                    dot.className = 'particle-dot';
+                    const size = 1 + Math.random() * 2.6;
+                    dot.style.width = size + 'px';
+                    dot.style.height = size + 'px';
+                    dot.style.left = Math.random() * 100 + '%';
+                    dot.style.top = Math.random() * 100 + '%';
+                    dot.style.animationDuration = 9 + Math.random() * 20 + 's';
+                    dot.style.animationDelay = -Math.random() * 20 + 's';
+                    dot.style.opacity = (0.18 + Math.random() * 0.22).toFixed(2);
+                    siteParticles.appendChild(dot);
+                }
+            }
+
+            if (heroParticles) {
+                const totalPurple = 26;
+                for (let i = 0; i < totalPurple; i += 1) {
+                    const dot = document.createElement('span');
+                    dot.className = 'hero-particle-dot';
+                    const size = 2 + Math.random() * 6;
+                    dot.style.width = size + 'px';
+                    dot.style.height = size + 'px';
+                    dot.style.left = Math.random() * 100 + '%';
+                    dot.style.top = Math.random() * 100 + '%';
+                    dot.style.animationDuration = 2.5 + Math.random() * 3.5 + 's';
+                    dot.style.animationDelay = -Math.random() * 3 + 's';
+                    dot.style.opacity = (0.3 + Math.random() * 0.28).toFixed(2);
+                    heroParticles.appendChild(dot);
+                }
+            }
+
+            if (!heroWrap || !heroCharacter) {
+                return;
+            }
+
+            let mouseX = 0;
+            let mouseY = 0;
+            let currentX = 0;
+            let currentY = 0;
+
+            const applyMotion = () => {
+                currentX += (mouseX - currentX) * 0.08;
+                currentY += (mouseY - currentY) * 0.08;
+
+                const rotateY = currentX * 8;
+                const rotateX = -currentY * 6;
+                const moveX = currentX * 24;
+                const moveY = currentY * 20;
+
+                heroWrap.style.transform = 'translate3d(' + (moveX * 0.55) + 'px, ' + (moveY * 0.45) + 'px, 0) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
+                heroCharacter.style.transform = 'translate3d(' + moveX + 'px, ' + moveY + 'px, 0)';
+
+                if (heroParticles) {
+                    const dots = heroParticles.querySelectorAll('.hero-particle-dot');
+                    dots.forEach((dot, index) => {
+                        const depth = 0.2 + ((index % 6) * 0.12);
+                        dot.style.transform = 'translate3d(' + (moveX * depth) + 'px, ' + (moveY * depth * 0.8) + 'px, 0)';
+                    });
+                }
+
+                requestAnimationFrame(applyMotion);
+            };
+
+            window.addEventListener('mousemove', function (event) {
+                const bounds = heroWrap.getBoundingClientRect();
+                const centerX = bounds.left + bounds.width / 2;
+                const centerY = bounds.top + bounds.height / 2;
+                mouseX = Math.max(-1, Math.min(1, (event.clientX - centerX) / (bounds.width / 2)));
+                mouseY = Math.max(-1, Math.min(1, (event.clientY - centerY) / (bounds.height / 2)));
+            });
+
+            window.addEventListener('mouseleave', function () {
+                mouseX = 0;
+                mouseY = 0;
+            });
+
+            applyMotion();
+        })();
+
+        // Smooth animations on scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
