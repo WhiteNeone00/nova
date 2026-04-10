@@ -1,12 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import styles from './auth.module.css';
 
 type Mode = 'login' | 'signup';
 
 export default function AuthPage() {
+  const router = useRouter();
   const [mode, setMode] = useState<Mode>('login');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -45,6 +47,9 @@ export default function AuthPage() {
       }
 
       setSuccess(mode === 'login' ? 'Signed in successfully.' : 'Account created successfully.');
+      window.setTimeout(() => {
+        router.push('/dashboard');
+      }, 250);
     } catch {
       setError('Network error. Please try again.');
     } finally {

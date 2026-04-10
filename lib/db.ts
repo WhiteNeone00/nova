@@ -8,25 +8,44 @@ const requiredVars = [
   'DB_NAME',
 ] as const;
 
-requiredVars.forEach((key) => {
-  if (!process.env[key]) {
+let pool: mysql.Pool | null = null;
+
+function getRequiredEnv(key: (typeof requiredVars)[number]) {
+  const value = process.env[key];
+  if (!value) {
     throw new Error(`Missing required environment variable: ${key}`);
   }
-});
+  return value;
+}
 
-export const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+export function getPool() {
+  if (pool) {
+    return pool;
+  }
+
+  const host = getRequiredEnv('DB_HOST');
+  const port = Number(getRequiredEnv('DB_PORT'));
+  const user = getRequiredEnv('DB_USER');
+  const password = getRequiredEnv('DB_PASSWORD');
+  const database = getRequiredEnv('DB_NAME');
+
+  pool = mysql.createPool({
+    host,
+    port,
+    user,
+    password,
+    database,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+  });
+
+  return pool;
+}
 
 export async function ensureUsersTable() {
-  await pool.query(`
+  const currentPool = getPool();
+  await currentPool.query(`
     CREATE TABLE IF NOT EXISTS users (
       id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
       username VARCHAR(50) NOT NULL,

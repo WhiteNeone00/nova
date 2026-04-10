@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { hashPassword, signAuthToken } from '@/lib/auth';
-import { ensureUsersTable, pool } from '@/lib/db';
+import { ensureUsersTable, getPool } from '@/lib/db';
 
 export async function POST(req: Request) {
   try {
@@ -35,6 +35,7 @@ export async function POST(req: Request) {
     }
 
     await ensureUsersTable();
+    const pool = getPool();
 
     const [[existing]] = await pool.query<any[]>(
       'SELECT id FROM users WHERE email = ? OR username = ? LIMIT 1',
