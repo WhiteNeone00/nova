@@ -302,6 +302,7 @@
       gap: 24px;
       position: relative;
       overflow: hidden;
+      min-height: 456px;
     }
 
     .auth-card::before {
@@ -477,14 +478,37 @@
 
     .mode-panel {
       width: 100%;
-      display: none;
+      display: flex;
       gap: 24px;
       flex-direction: column;
       align-items: center;
+      opacity: 0;
+      transform: translate3d(0, 10px, 0);
+      max-height: 0;
+      overflow: hidden;
+      pointer-events: none;
+      transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1), transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), max-height 0.42s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .mode-panel.active {
-      display: flex;
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      max-height: 620px;
+      pointer-events: auto;
+    }
+
+    [data-stagger] {
+      opacity: 0;
+      filter: blur(3px);
+      transform: translate3d(0, 14px, 0) scale(0.99);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--stagger-delay, 0ms);
+    }
+
+    body.is-ready [data-stagger] {
+      opacity: 1;
+      filter: blur(0);
+      transform: translate3d(0, 0, 0) scale(1);
     }
 
     .legal {
@@ -581,7 +605,7 @@
 
     <div class="auth-content">
       <div class="auth-wrap">
-        <div class="back-row">
+        <div class="back-row" data-stagger>
           <a href="/" class="back-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="m12 19-7-7 7-7"></path>
@@ -591,17 +615,17 @@
           </a>
         </div>
 
-        <section class="auth-card">
+        <section class="auth-card" data-stagger>
           <div class="mode-panel active" data-mode="login">
-            <img src="/logo.png" alt="Nova Logo" class="auth-logo">
+            <img src="/logo.png" alt="Nova Logo" class="auth-logo" data-stagger>
 
-            <div class="auth-head">
+            <div class="auth-head" data-stagger>
               <h1>Welcome Back</h1>
               <p>Enter your details to access your dashboard.</p>
             </div>
 
-            <form action="#" method="post">
-              <div class="field">
+            <form action="#" method="post" data-stagger>
+              <div class="field" data-stagger>
                 <label for="email">Email Address</label>
                 <div class="input-wrap">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -612,7 +636,7 @@
                 </div>
               </div>
 
-              <div class="field">
+              <div class="field" data-stagger>
                 <label for="password">Password</label>
                 <div class="input-wrap">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -630,21 +654,21 @@
                 <div class="forgot"><a href="/reset-password">Forgot your password?</a></div>
               </div>
 
-              <button class="submit" type="submit">Sign In</button>
-              <button class="switch-btn" type="button" data-switch-to="signup">Don't have an account? Sign up</button>
+              <button class="submit" type="submit" data-stagger>Sign In</button>
+              <button class="switch-btn" type="button" data-switch-to="signup" data-stagger>Don't have an account? Sign up</button>
             </form>
           </div>
 
           <div class="mode-panel" data-mode="signup">
-            <img src="/logo.png" alt="Nova Logo" class="auth-logo">
+            <img src="/logo.png" alt="Nova Logo" class="auth-logo" data-stagger>
 
-            <div class="auth-head">
+            <div class="auth-head" data-stagger>
               <h1>Create Account</h1>
               <p>Join Nova and start executing today.</p>
             </div>
 
-            <form action="#" method="post">
-              <div class="field">
+            <form action="#" method="post" data-stagger>
+              <div class="field" data-stagger>
                 <label for="username">Username</label>
                 <div class="input-wrap">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -655,7 +679,7 @@
                 </div>
               </div>
 
-              <div class="field">
+              <div class="field" data-stagger>
                 <label for="signup-email">Email Address</label>
                 <div class="input-wrap">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -666,7 +690,7 @@
                 </div>
               </div>
 
-              <div class="field">
+              <div class="field" data-stagger>
                 <label for="signup-password">Password</label>
                 <div class="input-wrap">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -683,13 +707,13 @@
                 </div>
               </div>
 
-              <button class="submit" type="submit">Sign Up</button>
-              <button class="switch-btn" type="button" data-switch-to="login">Already a member? Sign in</button>
+              <button class="submit" type="submit" data-stagger>Sign Up</button>
+              <button class="switch-btn" type="button" data-switch-to="login" data-stagger>Already a member? Sign in</button>
             </form>
           </div>
         </section>
 
-        <div class="legal">
+        <div class="legal" data-stagger>
           <p>By signing in, you agree to our <a href="/policy">Policy</a>, <a href="/terms">Terms</a> and <a href="/privacy">Privacy</a>.</p>
         </div>
       </div>
@@ -735,6 +759,23 @@
     })();
 
     (function () {
+      const staggerItems = Array.from(document.querySelectorAll('[data-stagger]'));
+      staggerItems.forEach((item, index) => {
+        item.style.setProperty('--stagger-delay', (index * 55) + 'ms');
+      });
+
+      const markReady = () => {
+        document.body.classList.add('is-ready');
+      };
+
+      if (document.readyState === 'complete') {
+        window.setTimeout(markReady, 80);
+      } else {
+        window.addEventListener('load', () => {
+          window.setTimeout(markReady, 80);
+        }, { once: true });
+      }
+
       const panels = Array.from(document.querySelectorAll('[data-mode]'));
       const switches = Array.from(document.querySelectorAll('[data-switch-to]'));
 
