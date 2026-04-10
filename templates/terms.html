@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nova Terms of Service</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Outfit, "Outfit Fallback", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      color: #fff;
+      background: radial-gradient(circle at 34% 42%, #1b0e35 0%, #0d0a22 42%, #050916 74%, #02040d 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .background {
+      position: fixed;
+      inset: 0;
+      z-index: -50;
+      background:
+        linear-gradient(100deg, #14092b 0%, #0a0f25 48%, #03172b 100%),
+        radial-gradient(circle at 18% 56%, rgba(124, 58, 237, 0.24), rgba(8, 10, 20, 0) 54%),
+        radial-gradient(circle at 84% 52%, rgba(37, 99, 235, 0.3), rgba(5, 10, 22, 0) 50%);
+    }
+
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 56px 56px;
+      opacity: 0.22;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: rgba(62, 35, 75, 0.1);
+      backdrop-filter: blur(0px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0);
+      transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), backdrop-filter 0.6s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: background-color, backdrop-filter, border-color;
+    }
+
+    header.nav-scrolled {
+      background: rgba(17, 17, 20, 0.4);
+      backdrop-filter: blur(10px);
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    nav {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo { width: 40px; height: 40px; }
+
+    .nav-links {
+      display: none;
+      gap: 3rem;
+      flex: 2;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media (min-width: 1024px) {
+      .nav-links { display: flex; }
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #9ca3af;
+      font-size: 14px;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-link:hover { color: #fff; }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      width: 0;
+      height: 1.5px;
+      background: #a855f7;
+      transform: translateX(-50%);
+      transition: width 0.3s;
+      opacity: 0.4;
+    }
+
+    .nav-link:hover::after { width: 100%; }
+
+    .sign-in-btn {
+      padding: 10px 32px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: #fff;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    main { padding-top: 128px; }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .page-card {
+      border-radius: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(10, 10, 12, 0.8);
+      backdrop-filter: blur(14px);
+      padding: 34px;
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+      font-size: clamp(36px, 4.6vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 30px;
+      background: linear-gradient(to right, #c084fc, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 30px;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+
+    .content {
+      display: grid;
+      gap: 22px;
+      color: #9ca3af;
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    ul {
+      margin-top: 10px;
+      padding-left: 20px;
+      display: grid;
+      gap: 8px;
+    }
+
+    li { color: #9ca3af; }
+
+    .updated {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+      color: #6b7280;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    footer {
+      width: 100%;
+      padding: 48px 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(5, 5, 8, 0.8);
+      backdrop-filter: blur(10px);
+      color: #a0aec0;
+      font-size: 14px;
+    }
+
+    .footer-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { color: #a0aec0; text-decoration: none; }
+    .footer-links a:hover { color: #60a5fa; }
+    .footer-links .active { color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="background"><div class="bg-grid"></div></div>
+
+  <header>
+    <nav>
+      <a href="/" class="logo"><img src="/logo.png" alt="Nova Logo" width="40" height="40"></a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/#features" class="nav-link">Features</a>
+        <a href="/reviews" class="nav-link">Reviews</a>
+        <a href="/policy" class="nav-link">Policy</a>
+        <a href="/#plans" class="nav-link">Plans</a>
+        <a href="/#faq" class="nav-link">FAQ</a>
+        <a href="https://discord.gg/sided" target="_blank" class="nav-link">Discord</a>
+      </div>
+      <a href="/auth" class="sign-in-btn">Sign In</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container">
+      <div class="page-card">
+        <h1>Terms of Service</h1>
+
+        <div class="content">
+          <section>
+            <h2>1. Introduction</h2>
+            <p>Welcome to Nova Serverside. By accessing or using our services, you agree to comply with and be bound by these Terms of Service. If you do not agree, please do not use our services.</p>
+          </section>
+
+          <section>
+            <h2>2. Description of Service</h2>
+            <p>Nova Serverside is a utility designed for Roblox developers and server administrators to test, analyze, and manage their game environments ("Service"). The Service provides server-side execution, telemetry APIs, and administrative dashboards strictly intended for educational and developmental purposes within games you own or have explicit permission to operate in.</p>
+          </section>
+
+          <section>
+            <h2>3. Acceptable Use</h2>
+            <p>You agree to use our Service only for lawful, authorized purposes. You strictly agree NOT to:</p>
+            <ul>
+              <li>Use the Service for any malicious intent, including but not limited to exploiting, cheating, disrupting gameplay, or violating the terms of service of third-party platforms.</li>
+              <li>Attempt to bypass or abuse our API limits, authentication mechanisms, or server infrastructure.</li>
+              <li>Distribute malicious scripts, malware, or any code intended to harm systems or steal data.</li>
+              <li>Use the Service in any game or environment where you do not have explicit administrative consent.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>4. Account Responsibilities</h2>
+            <p>You are responsible for safeguarding your account credentials and any actions taken under your account. We reserve the right to suspend or terminate accounts that breach these Terms, exhibit malicious behavior, or compromise the integrity of our Service.</p>
+          </section>
+
+          <section>
+            <h2>5. Disclaimer of Warranties &amp; Limitation of Liability</h2>
+            <p>The Service is provided "as is" without any warranties, express or implied. Nova Serverside and its administrators shall not be held liable for any damages, account bans, or monetary losses arising from the use or inability to use the Service. You use this tool at your own risk.</p>
+          </section>
+
+          <section>
+            <h2>6. Changes to Terms</h2>
+            <p>We reserve the right to modify these Terms of Service at any time. Continued use of the Service after changes indicates your acceptance of the new terms.</p>
+          </section>
+        </div>
+
+        <div class="updated">Last updated: April 8, 2026</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div>
+        <img src="/logo.png" alt="Nova Logo" width="32" height="32" style="margin-bottom: 10px;">
+        <p>© 2026 Nova Serverside. All rights reserved.</p>
+      </div>
+      <div class="footer-links">
+        <a href="/terms" class="active">Terms of Service</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="mailto:support@serverside.gg">Contact Us</a>
+        <a href="https://discord.gg/sided" target="_blank">Discord</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const header = document.querySelector('header');
+      if (!header) {
+        return;
+      }
+
+      const enterScrolledAt = 24;
+      const leaveScrolledAt = 8;
+      let isScrolled = false;
+      let ticking = false;
+
+      const applyNavState = () => {
+        const y = window.scrollY;
+        if (!isScrolled && y >= enterScrolledAt) {
+          header.classList.add('nav-scrolled');
+          isScrolled = true;
+        } else if (isScrolled && y <= leaveScrolledAt) {
+          header.classList.remove('nav-scrolled');
+          isScrolled = false;
+        }
+      };
+
+      const onScroll = () => {
+        if (ticking) {
+          return;
+        }
+        ticking = true;
+        requestAnimationFrame(() => {
+          applyNavState();
+          ticking = false;
+        });
+      };
+
+      applyNavState();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+  </script>
+</body>
+</html>

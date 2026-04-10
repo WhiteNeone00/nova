@@ -11,8 +11,8 @@ function extractTemplateParts(html: string) {
   };
 }
 
-export default function HomePage() {
-  const htmlPath = path.join(process.cwd(), 'templates', 'landing.html');
+export default function AuthPage() {
+  const htmlPath = path.join(process.cwd(), 'templates', 'auth.html');
   const rawHtml = fs.readFileSync(htmlPath, 'utf8');
   const template = extractTemplateParts(rawHtml);
 

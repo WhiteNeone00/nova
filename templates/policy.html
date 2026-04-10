@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nova Policy</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Outfit, "Outfit Fallback", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      color: #fff;
+      background: radial-gradient(circle at 34% 42%, #1b0e35 0%, #0d0a22 42%, #050916 74%, #02040d 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .background {
+      position: fixed;
+      inset: 0;
+      z-index: -50;
+      background:
+        linear-gradient(100deg, #14092b 0%, #0a0f25 48%, #03172b 100%),
+        radial-gradient(circle at 18% 56%, rgba(124, 58, 237, 0.24), rgba(8, 10, 20, 0) 54%),
+        radial-gradient(circle at 84% 52%, rgba(37, 99, 235, 0.3), rgba(5, 10, 22, 0) 50%);
+    }
+
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 56px 56px;
+      opacity: 0.22;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: rgba(62, 35, 75, 0.1);
+      backdrop-filter: blur(0px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0);
+      transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), backdrop-filter 0.6s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: background-color, backdrop-filter, border-color;
+    }
+
+    header.nav-scrolled {
+      background: rgba(17, 17, 20, 0.4);
+      backdrop-filter: blur(10px);
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    nav {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo { width: 40px; height: 40px; }
+
+    .nav-links {
+      display: none;
+      gap: 3rem;
+      flex: 2;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media (min-width: 1024px) {
+      .nav-links { display: flex; }
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #9ca3af;
+      font-size: 14px;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-link:hover { color: #fff; }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      width: 0;
+      height: 1.5px;
+      background: #a855f7;
+      transform: translateX(-50%);
+      transition: width 0.3s;
+      opacity: 0.4;
+    }
+
+    .nav-link:hover::after { width: 100%; }
+
+    .sign-in-btn {
+      padding: 10px 32px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: #fff;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    main { padding-top: 128px; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; }
+
+    .section-label {
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.4em;
+      background: linear-gradient(to right, #c084fc, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .section-line {
+      width: 64px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(to right, #a855f7, #3b82f6);
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px rgba(168,85,247,0.3);
+    }
+
+    h1 {
+      font-size: clamp(44px, 6vw, 72px);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, #c084fc, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .lead {
+      color: #9ca3af;
+      font-size: 18px;
+      max-width: 700px;
+      line-height: 1.7;
+      margin-bottom: 42px;
+    }
+
+    .policy-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr;
+      margin-bottom: 18px;
+    }
+
+    @media (min-width: 900px) {
+      .policy-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .card {
+      border-radius: 2rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(7,7,9,0.45);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    .card-head {
+      padding: 30px 34px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.01);
+    }
+
+    .card-eyebrow {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: #6b7280;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .dot { width: 6px; height: 6px; border-radius: 999px; background: #6b7280; }
+    .dot.purple { background: #a855f7; box-shadow: 0 0 12px rgba(168,85,247,0.5); }
+
+    .card h3 { font-size: 30px; letter-spacing: -0.02em; }
+
+    .rules { padding: 28px 34px; display: grid; gap: 16px; }
+
+    .rule {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: #9ca3af;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .rule-mark {
+      width: 22px;
+      height: 22px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 900;
+      margin-top: 2px;
+    }
+
+    .rule-mark.bad { background: rgba(244,63,94,0.12); border: 1px solid rgba(244,63,94,0.25); color: #fb7185; }
+    .rule-mark.good { background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.3); color: #c084fc; }
+
+    .note-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr;
+      margin-top: 18px;
+    }
+
+    @media (min-width: 900px) {
+      .note-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .note {
+      border-radius: 2rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+      padding: 28px 32px;
+      color: #9ca3af;
+      line-height: 1.7;
+    }
+
+    .risk-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin: 18px 0;
+    }
+
+    @media (min-width: 900px) {
+      .risk-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    .risk-card {
+      padding: 24px;
+      border-radius: 1rem;
+      background: rgba(244, 63, 94, 0.02);
+      border: 1px solid rgba(244, 63, 94, 0.12);
+      backdrop-filter: blur(14px);
+      transition: background 0.3s ease;
+    }
+
+    .risk-card:hover {
+      background: rgba(244, 63, 94, 0.05);
+    }
+
+    .risk-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: rgba(244, 63, 94, 0.1);
+      border: 1px solid rgba(244, 63, 94, 0.24);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fb7185;
+      margin-bottom: 14px;
+    }
+
+    .risk-title {
+      font-size: 11px;
+      font-weight: 900;
+      color: #fb7185;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+
+    .risk-copy {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    .note-icon-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .note-icon-row svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .support-link {
+      color: #c084fc;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      transition: color 0.2s ease;
+    }
+
+    .support-link:hover {
+      color: #fff;
+    }
+
+    .return-wrap {
+      margin-top: 64px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .return-btn {
+      height: 64px;
+      padding: 0 48px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #6b7280;
+      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      font-size: 11px;
+      font-weight: 700;
+      transition: all 0.25s ease;
+    }
+
+    .return-btn:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .note-title {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 13px;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      width: 100%;
+      padding: 48px 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(5, 5, 8, 0.8);
+      backdrop-filter: blur(10px);
+      color: #a0aec0;
+      font-size: 14px;
+    }
+
+    .footer-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { color: #a0aec0; text-decoration: none; }
+    .footer-links a:hover { color: #60a5fa; }
+  </style>
+</head>
+<body>
+  <div class="background"><div class="bg-grid"></div></div>
+
+  <header>
+    <nav>
+      <a href="/" class="logo"><img src="/logo.png" alt="Nova Logo" width="40" height="40"></a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/#features" class="nav-link">Features</a>
+        <a href="/reviews" class="nav-link">Reviews</a>
+        <a href="/policy" class="nav-link">Policy</a>
+        <a href="/#plans" class="nav-link">Plans</a>
+        <a href="/#faq" class="nav-link">FAQ</a>
+        <a href="https://discord.gg/sided" target="_blank" class="nav-link">Discord</a>
+      </div>
+      <a href="/auth" class="sign-in-btn">Sign In</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container" id="policy">
+      <span class="section-label">Customer Policy</span>
+      <div class="section-line"></div>
+      <h1>Usage <span class="gradient-text">Policy.</span></h1>
+      <p class="lead">High-tier tools come with high-tier responsibility. Please review our usage guidelines carefully.</p>
+
+      <div class="policy-grid">
+        <article class="card">
+          <div class="card-head">
+            <div class="card-eyebrow"><span class="dot"></span><span>Basic Plan</span></div>
+            <h3>Basic Policy</h3>
+          </div>
+          <div class="rules">
+            <div class="rule"><span class="rule-mark bad">!</span><span><strong style="color:#fff; font-size:14px;">No Mass Killing</strong><br>Team wiping or systematically eliminating players to ruin experiences is strictly prohibited.</span></div>
+            <div class="rule"><span class="rule-mark bad">!</span><span><strong style="color:#fff; font-size:14px;">No Abusive Scripts</strong><br>Scripts that fundamentally break core gameplay mechanics are not permitted.</span></div>
+            <div class="rule"><span class="rule-mark bad">!</span><span><strong style="color:#fff; font-size:14px;">No Unauthorized Bans</strong><br>Reserved for Enhanced users, bans are prohibited.</span></div>
+            <div class="rule"><span class="rule-mark bad">!</span><span><strong style="color:#fff; font-size:14px;">No Map Changes</strong><br>Do not attempt to modify, replace, or delete existing game map geometry.</span></div>
+            <div class="rule"><span class="rule-mark bad">!</span><span><strong style="color:#fff; font-size:14px;">No Global Commands</strong><br>Commands affecting the entire server are disabled for this license level.</span></div>
+          </div>
+        </article>
+
+        <article class="card" style="border-color: rgba(168,85,247,0.25); background: rgba(168,85,247,0.03);">
+          <div class="card-head" style="border-bottom-color: rgba(168,85,247,0.15); background: rgba(168,85,247,0.05);">
+            <div class="card-eyebrow"><span class="dot purple"></span><span style="color:#c084fc;">Enhanced Plan</span></div>
+            <h3>Enhanced Policy</h3>
+          </div>
+          <div class="rules">
+            <div class="rule"><span class="rule-mark good">+</span><span><strong style="color:#e9d5ff; font-size:14px;">Basic Unlocked</strong><br>Everything that is blacklisted in basic is allowed unless written otherwise.</span></div>
+            <div class="rule"><span class="rule-mark bad">!</span><span><strong style="color:#fff; font-size:14px;">No Crash Scripts</strong><br>Deploying scripts designed to crash clients or stall servers is forbidden.</span></div>
+            <div class="rule"><span class="rule-mark bad">!</span><span><strong style="color:#fff; font-size:14px;">No Mass Kicking</strong><br>Systematic removal of players through abusive moderation results in blacklist.</span></div>
+            <div class="rule"><span class="rule-mark" style="background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); color:#6b7280;">-</span><span><strong style="color:#fff; font-size:14px;">Limited Map Editing</strong><br>Small changes to the map are allowed. Any scripts that may delete or change the ENTIRE map are prohibited.</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="risk-grid">
+        <article class="risk-card">
+          <div class="risk-icon">!</div>
+          <h4 class="risk-title">No External Executors</h4>
+          <p class="risk-copy">Circumventing Nova's security via third-party tools results in a HWID ban.</p>
+        </article>
+        <article class="risk-card">
+          <div class="risk-icon">!</div>
+          <h4 class="risk-title">Confidentiality</h4>
+          <p class="risk-copy">Leaking or redistributing buyer-exclusive media or scripts is strictly forbidden. This rule also applies in-game.</p>
+        </article>
+        <article class="risk-card">
+          <div class="risk-icon">!</div>
+          <h4 class="risk-title">Commercial Use</h4>
+          <p class="risk-copy">Using Nova for personal profit, RMT, or fraudulent schemes is prohibited.</p>
+        </article>
+        <article class="risk-card">
+          <div class="risk-icon">!</div>
+          <h4 class="risk-title">Roblox TOS Compliance</h4>
+          <p class="risk-copy">Execution of NSFW content or chat filter bypasses results in immediate termination.</p>
+        </article>
+      </div>
+
+      <div class="note-grid">
+        <div class="note">
+          <div class="note-icon-row">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><path d="m19 8 3 8a5 5 0 0 1-6 0zV7"></path><path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1"></path><path d="m5 8 3 8a5 5 0 0 1-6 0zV7"></path><path d="M7 21h10"></path></svg>
+            <div class="note-title">Refund Policy</div>
+          </div>
+          <p>Purchases are eligible for refund requests within <strong style="color:#fff;">72 hours</strong> of transaction, provided no whitelisted account has been blacklisted for tier policy violations.</p>
+        </div>
+        <div class="note">
+          <div class="note-icon-row">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"></path></svg>
+            <div class="note-title">Contact &amp; Support</div>
+          </div>
+          <p style="margin-bottom:10px;">If you have any questions regarding your license or need support, contact us via email or our Discord server.</p>
+          <a href="mailto:support@serverside.gg" class="support-link">support@serverside.gg <span style="font-size:14px;">→</span></a>
+        </div>
+      </div>
+
+      <div class="return-wrap">
+        <a href="/#plans" class="return-btn">Return to whitelist <span style="font-size:15px; letter-spacing:0;">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div>
+        <img src="/logo.png" alt="Nova Logo" width="32" height="32" style="margin-bottom: 10px;">
+        <p>© 2026 Nova Serverside. All rights reserved.</p>
+      </div>
+      <div class="footer-links">
+        <a href="/terms">Terms of Service</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="mailto:support@serverside.gg">Contact Us</a>
+        <a href="https://discord.gg/sided" target="_blank">Discord</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const header = document.querySelector('header');
+      if (!header) {
+        return;
+      }
+
+      const enterScrolledAt = 24;
+      const leaveScrolledAt = 8;
+      let isScrolled = false;
+      let ticking = false;
+
+      const applyNavState = () => {
+        const y = window.scrollY;
+        if (!isScrolled && y >= enterScrolledAt) {
+          header.classList.add('nav-scrolled');
+          isScrolled = true;
+        } else if (isScrolled && y <= leaveScrolledAt) {
+          header.classList.remove('nav-scrolled');
+          isScrolled = false;
+        }
+      };
+
+      const onScroll = () => {
+        if (ticking) {
+          return;
+        }
+        ticking = true;
+        requestAnimationFrame(() => {
+          applyNavState();
+          ticking = false;
+        });
+      };
+
+      applyNavState();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+  </script>
+</body>
+</html>
